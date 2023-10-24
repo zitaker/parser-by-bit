@@ -1,72 +1,33 @@
-# import selenium
-
+# from selenium import webdriver
 # from bs4 import BeautifulSoup
-# import urllib.request
+#
+#
+# driver = webdriver.Chrome()
+# driver.get("https://announcements.bybit.com/en-US/article/special-offer-looking-for-a-new-crypto-card--bltaa691019e4782034/")
+#
+# html = driver.page_source
+# soup = BeautifulSoup(html, "html.parser")
+#
+# tag = soup.find_all("span", class_='article-detail-date')
+# for content in tag:
+#     print(content.string)
+# driver.quit()
 
 from selenium import webdriver
-# import time
-
-# url = "https://announcements.bybit.com/en-US/article/special-offer-looking-for-a-new-crypto-card--bltaa691019e4782034/"
-# driver = webdriver.Firefox()
-# driver.get(url)
-# time.sleep(5) # ждать 5 секунд пока страница загрузится
-# data = driver.page_source # получить исходный код страницы
-# driver.close()
-#
-# print(data)
+from bs4 import BeautifulSoup
 
 
-# from selenium import webdriver
-# from selenium.webdriver.common.by import By
-# from selenium.webdriver.common.keys import Keys
+driver = webdriver.Chrome()
+driver.get("https://announcements.bybit.com/en-US/?category=&page=1")
 
-# browser = webdriver.Firefox()
+html = driver.page_source
+soup = BeautifulSoup(html, "html.parser")
 
-# driver = browser.get('https://announcements.bybit.com/en-US/article/special-offer-looking-for-a-new-crypto-card--bltaa691019e4782034/')
-#                     url = "https://announcements.bybit.com/en-US/article/special-offer-looking-for-a-new-crypto-card--bltaa691019e4782034/"
-#                     driver = webdriver.Firefox()
-#                     driver.get(url)
-#                     # assert 'Yahoo' in browser.title
-#                     data = driver.page_source
+tag_div = soup.find_all("div", class_='article-item-date')
+# tag_span = soup.find_all("div", class_='ant-typography ant-typography-ellipsis ant-typography-ellipsis-multiple-line article-item-title')
 
-    # soup = BeautifulSoup(data)
-    # title = soup.p
-    #
-    # print(title)
-# elem = browser.find_element(By.NAME, 'p')  # Find the search box
-# elem.send_keys('seleniumhq' + Keys.RETURN)
-
-# browser.quit()
-
-
-# h1_tag = data.find('h1')
-# title_tag = data.find('title')
-# description_tag = data.find('meta', attrs={'name': 'description'})
-    # font_tag = data.find(style={'vertical-align': 'inherit'})
-
-# h1 = h1_tag.text.strip() if h1_tag else ''
-# title = title_tag.text.strip() if title_tag else ''
-# description = description_tag['content'].strip() \
-#     if description_tag else ''
-    # font = font_tag.text.strip()
-# <font style="vertical-align: inherit;">21 октября 2023 г.</font>
-# print(font)
-# return h1, title, description
-
-
-
-# soup = BeautifulSoup(data.read(), 'html.parser').find('font', {'style': 'vertical-align: inherit;'})
-# print(soup.string)
-
-# html_content = '''<font style="vertical-align: inherit;">Some content to parse</font>'''
-# rr = BeautifulSoup(html_content, 'html.parser')
-# ww = rr.find('font')
-# print(ww.contents[0])
-
-
-
-driver = webdriver.Firefox()
-driver.get("https://announcements.bybit.com/en-US/article/special-offer-looking-for-a-new-crypto-card--bltaa691019e4782034/")
-
-content = driver.page_source
-print(content)
+for content in tag_div:
+    print(content.string)
+# for content in tag_span:
+#     print(content.string)
+driver.quit()
