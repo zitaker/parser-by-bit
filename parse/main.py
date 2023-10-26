@@ -79,11 +79,14 @@ try:
 
     tag_a = driver.find_element(By.CLASS_NAME, 'no-style')
 
+    tag_div = tag_a.find_element(By.CLASS_NAME, 'article-item-date')
+    print(tag_div.text)
+
     tag_span = tag_a.find_element(By.TAG_NAME, 'span')
     print(tag_span.text)
 
-    tag_div = tag_a.find_element(By.CLASS_NAME, 'article-item-date')
-    print(tag_div.text)
+    tag_a_href = tag_a.find_element(By.XPATH, "//a[@class='no-style']").get_attribute('href')
+    print(tag_a_href)
 
 except Exception as ex:
     print(ex)
