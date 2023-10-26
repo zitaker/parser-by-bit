@@ -71,20 +71,20 @@ from selenium.webdriver.chrome.service import Service
 from webdriver_manager.chrome import ChromeDriverManager
 
 
-url = "https://python-scripts.com/"
-# url = 'https://announcements.bybit.com/en-US/?category=&page=1'
+url = 'https://announcements.bybit.com/en-US/?category=&page=1'
 driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()))
 
 try:
     driver.get(url=url)
-    search_field = driver.find_element(By.CLASS_NAME, 'site-title')
-    # search_field = driver.find_element(By.CLASS_NAME, 'no-style')
-    print(search_field.text)
 
-    # вывести содержимое href
-    # element = driver.find_element(By.LINK_TEXT, 'a')
-    # href = element.get_property('href')
-    # print(href)
+    tag_a = driver.find_element(By.CLASS_NAME, 'no-style')
+
+    tag_span = tag_a.find_element(By.TAG_NAME, 'span')
+    print(tag_span.text)
+
+    tag_div = tag_a.find_element(By.CLASS_NAME, 'article-item-date')
+    print(tag_div.text)
+
 except Exception as ex:
     print(ex)
 finally:
