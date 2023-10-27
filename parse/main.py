@@ -16,16 +16,36 @@ def parser(urls):
         # tag_span = tag_a.find_element(By.TAG_NAME, 'span')
         # tag_a_href = tag_a.find_element(
         #     By.XPATH, "//a[@class='no-style']").get_attribute('href')
-        #
+
         # return tag_div.text, tag_span.text, tag_a_href
 
         all_tags = []
         for tag in tag_a:
-            all_tags.append(tag.text)
-        return all_tags
+            all_tags.append(tag)
+
+        # return all_tags
 
         # with open(file_path, "w") as file:
         #     file.write(driver.page_source)
+
+        # result = []
+        # for elem in all_tags:
+        #     if elem.find_element(By.CLASS_NAME, 'article-item-date'):
+        #         result.append(elem.find_element(By.CLASS_NAME, 'article-item-date').text)
+        # return result
+
+        result = []
+        for elem in all_tags:
+            tag_div = elem.find_element(By.CLASS_NAME, 'article-item-date')
+            tag_span = elem.find_element(By.TAG_NAME, 'span')
+            tag_a_href = elem.find_element(
+                By.XPATH, "//a[@class='no-style']").get_attribute('href')
+            if tag_div and tag_span:
+                result.append(f"{tag_div.text} {tag_span.text} {tag_a_href}")
+                # result.append(f"{tag_a_href}")
+        return result
+
+
     except Exception as ex:
         return ex
     finally:
@@ -45,8 +65,10 @@ def get_items_urls(file_path):
         result.append(elem.text)
     return result
 
+
 url = 'https://announcements.bybit.com/en-US/?category=&page=1'
 file_path = '../tests/fixtures/source-page.html'
+
 
 def main():
     result = parser(url)
