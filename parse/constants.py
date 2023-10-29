@@ -1,2 +1,3 @@
 URLS = 'https://announcements.bybit.com/en-US/?category=&page=1'
-DIRECTORY_PATH = '../tests/fixtures/data.csv'
+NEW_DATA = '../tests/fixtures/new_data.csv'
+TEMPORARY_DATA = '../tests/fixtures/temporary_data.csv'
