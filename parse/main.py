@@ -42,14 +42,13 @@ import time
 #
 #     try:
 #         driver.get(url=urls)
-#         current_time = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
 #
 #         tag_a = driver.find_elements(By.XPATH, "//a[@class='no-style']")
 #         data = []
 #         for tag in tag_a:
 #             tag_span = tag.find_element(By.TAG_NAME, 'span')
 #             data.append(
-#                 [current_time, tag_span.text, tag.get_attribute('href')])
+#                 [tag_span.text, tag.get_attribute('href')])
 #
 #         return data
 #     except Exception as ex:
@@ -59,9 +58,11 @@ import time
 #         driver.quit()
 
 
-def compare_list_of_lists(list_1, list_2):
+def compares_lists(list_1, list_2):
+    time_of_appearance = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
     for elem_1, elem_2 in zip(list_1, list_2):
         if elem_1[1] != elem_2[1]:
+            elem_2.insert(0, f"{time_of_appearance}")
             return elem_2
     return list_2
 
@@ -79,9 +80,9 @@ def main():
     # полученные данные для сравнения перевел в список списков
 
     # сравниваю данные по ссылке или заголовку
-        data = [['1', '2', '1'], ['3', '4', '1'], ['5', '4', '1'], ['5', '5', '1']]
-        content = [['1', '2', '1'], ['3', '4', '1'], ['5', '4', '1'], ['5', '5', '1']]
-        result = compare_list_of_lists(data, content)
+        data = [['1', '2'], ['3', '4'], ['5', '4'], ['5', '5']]
+        content = [['1', '2'], ['3', '4'], ['5', '4'], ['5', '5']]
+        result = compares_lists(data, content)
 
         if len(result) == 3:
             # если данные отличаются сохранить данные в new_data и temporary_data
