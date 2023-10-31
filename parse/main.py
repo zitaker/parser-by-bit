@@ -6,12 +6,10 @@ from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.chrome.service import Service
 from webdriver_manager.chrome import ChromeDriverManager
-from constants import URLS, NEW_DATA, TEMPORARY_DATA
+from constants import URL, NEW_DATA, TEMPORARY_DATA
 
 
-def parser(urls):
-    time.sleep(1)
-
+def parser(url):
     options = webdriver.ChromeOptions()
     options.add_argument(
         "user-agent=Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:84.0) "
@@ -22,14 +20,14 @@ def parser(urls):
         options=options, service=Service(ChromeDriverManager().install()))
 
     try:
-        driver.get(url=urls)
+        driver.get(url=url)
 
-        tag_a = driver.find_elements(By.XPATH, "//a[@class='no-style']")
+        link = driver.find_elements(By.XPATH, "//a[@class='no-style']")
         data = []
-        for tag in tag_a:
-            tag_span = tag.find_element(By.TAG_NAME, 'span')
+        for tag in link:
+            text = tag.find_element(By.TAG_NAME, 'span')
             data.append(
-                [tag_span.text, tag.get_attribute('href')])
+                [text.text, tag.get_attribute('href')])
 
         return data
     except Exception as ex:
@@ -39,14 +37,14 @@ def parser(urls):
         driver.quit()
 
 
-def compares_lists(list_1, list_2):
+def compare_lists(list_1, list_2):
     for elem_1, elem_2 in zip(list_1, list_2):
         if elem_1[1] != elem_2[1]:
             return elem_2
     return list_2
 
 
-def reading_temporary_data():
+def read_temporary_data():
     with open(TEMPORARY_DATA, 'r') as file:
         reader = csv.reader(file)
         data = [row for row in reader]
@@ -54,14 +52,14 @@ def reading_temporary_data():
     return data
 
 
-def saving_temporary_data(data):
+def save_temporary_data(data):
     with open(TEMPORARY_DATA, 'w', newline='') as file:
         writer = csv.writer(file)
         writer.writerows(data)
     file.close()
 
 
-def saving_new_data(data):
+def save_new_data(data):
     time_of_appearance = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
     with open(NEW_DATA, 'a', newline='') as file:
         writer = csv.writer(file)
@@ -72,17 +70,19 @@ def saving_new_data(data):
 
 def main():
     while True:
-        content = parser(URLS)
-        result = compares_lists(reading_temporary_data(), content)
+        parsing_timeout = 1
+        time.sleep(parsing_timeout)
+        content = parser(URL)
+        result = compare_lists(read_temporary_data(), content)
 
         if len(result) == 2:
             print('данных нет в файле - '
                   'сохранить данные в temporary_data и new_data')
-            saving_temporary_data(content)
-            saving_new_data(result)
+            save_temporary_data(content)
+            save_new_data(result)
         else:
             print('сохранить данные в temporary_data')
-            saving_temporary_data(content)
+            save_temporary_data(content)
 
         print(main())
 
