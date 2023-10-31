@@ -10,6 +10,8 @@ from constants import URLS, NEW_DATA, TEMPORARY_DATA
 
 
 def parser(urls):
+    time.sleep(1)
+
     options = webdriver.ChromeOptions()
     options.add_argument(
         "user-agent=Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:84.0) "
@@ -76,15 +78,12 @@ def main():
             print('данных нет в файле - '
                   'сохранить данные в temporary_data и new_data')
             saving_temporary_data(content)
-
             saving_new_data(result)
-            time.sleep(1)
         else:
             print('сохранить данные в temporary_data')
             saving_temporary_data(content)
-            time.sleep(1)
 
-            print(main())
+        print(main())
 
 
 if __name__ == "__main__":
