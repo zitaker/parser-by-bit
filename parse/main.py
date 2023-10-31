@@ -50,7 +50,8 @@ def reading_temporary_data():
     with open(TEMPORARY_DATA, 'r') as file:
         reader = csv.reader(file)
         data = [row for row in reader]
-        return data
+    file.close()
+    return data
 
 
 def saving_temporary_data(data):
