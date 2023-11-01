@@ -22,12 +22,14 @@ def parser(url):
     try:
         driver.get(url=url)
 
-        link = driver.find_elements(By.XPATH, "//a[@class='no-style']")
+        selector = driver.find_elements(
+            By.XPATH, "//div[@class='article-list']/a")
         data = []
-        for tag in link:
+        for tag in selector:
             text = tag.find_element(By.TAG_NAME, 'span')
+            link = tag.get_attribute('href')
             data.append(
-                [text.text, tag.get_attribute('href')])
+                [text.text, link])
 
         return data
     except Exception as ex:
