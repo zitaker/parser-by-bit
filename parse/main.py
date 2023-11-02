@@ -9,6 +9,12 @@ from webdriver_manager.chrome import ChromeDriverManager
 from constants import URL, NEW_DATA, TEMPORARY_DATA
 
 
+def bypassing_cdn_caching(url):
+    now = datetime.now()
+    timestamp = int(time.mktime(now.timetuple()))
+    return f"{url}{'&source='}{timestamp}"
+
+
 def parser(url):
     options = webdriver.ChromeOptions()
     options.add_argument(
@@ -74,7 +80,7 @@ def main():
     while True:
         parsing_timeout = 1
         time.sleep(parsing_timeout)
-        content = parser(URL)
+        content = parser(bypassing_cdn_caching(URL))
         result = compare_lists(read_temporary_data(), content)
 
         if len(result) == 2:
