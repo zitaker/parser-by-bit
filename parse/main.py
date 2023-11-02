@@ -84,12 +84,9 @@ def main():
         result = compare_lists(read_temporary_data(), content)
 
         if len(result) == 2:
-            print('данных нет в файле - '
-                  'сохранить данные в temporary_data и new_data')
             save_temporary_data(content)
             save_new_data(result)
         else:
-            print('сохранить данные в temporary_data')
             save_temporary_data(content)
 
         print(main())
