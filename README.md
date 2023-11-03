@@ -19,6 +19,6 @@ The new data is saved in the file ```new_data.csv```. Located at ```parser-by-bi
 #### Install:
 1. Download the project.
 2. Go to the root directory of the project.
-3. Log in to the virtual environment poetry by the command ```poetry shell```
-4. Install the required packages with the command ```make install```
+3. Log in to the virtual environment poetry by the command ```poetry shell```.
+4. Install the required packages with the command ```make install```.
 5. Run the file '''main.py'''.  Located at '''parser-by-bit/parse/main.py'''.
